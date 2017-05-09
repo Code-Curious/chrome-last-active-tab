@@ -1,0 +1,41 @@
+{
+	"manifest_version": 2,
+	"name": "My Last active Tab Extension",
+	"description": "Basculer vers last active tab",
+	"version": "1.0",
+	"permissions": [
+
+		"http://*/*",
+		"https://*/*",
+		"activeTab",
+	    "https://ajax.googleapis.com/",
+	    "tabs"
+		],
+
+	"browser_action": {
+		"default_title" : "My last active tab"
+	 },
+	 
+	"background" : {
+		"scripts" : ["js/app.js" ]
+	},
+
+	
+	"content_scripts": [ {
+	   "js": [ "js/jquery-2.1.4.min.js", "js/mousetrap.min.js"],
+	   "matches": [ "http://*/*", "https://*/*"]
+	 }],
+
+
+	"commands":{
+		"last-tab" :{
+			"suggested_key":{
+				"default": "Alt+Q",
+				"windows": "Alt+Q"
+			},
+
+		"description" : "My Switch to last active tab command"
+		}
+	}
+
+}
