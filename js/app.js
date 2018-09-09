@@ -45,8 +45,8 @@ chrome.tabs.onRemoved.addListener(function(closedTabId){
 		// alert("Closed Tab was the last tab, popping....");
 		lastTabIdArray.pop();
 	}
-
 })
+
 function cleanArrayIfToobig(tab, maxSize){
 	if(tab.length > maxSize) {
 		do{tab.shift();} 
@@ -58,34 +58,36 @@ function switchToLastTab(){
 
 		// Si wikipedia alors unbind alt+q :
 
-		chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+/*		chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
 		    var url = tabs[0].url;
 		    if (url.match('wikipedia\.(org|com)')){
 		    	// DONT KNOW WHAT TO DO HERE
 		    	// $('*').off('keyup keydown keypress');
 
-/*		    	$(document).on('keypress', function(e) {
-		    		e.preventDefault();
-		    	});
-*/		    
+		    	// $(document).on('keypress', function(e) {
+		    	// 	e.preventDefault();
+		    	// });
 			}
-
 		});
+*/
+		
 
+	if (lastTabIdArray.length && lastTabIdArray[lastTabIdArray.length - 1] !== 0) {
+		lastTabId = lastTabIdArray[lastTabIdArray.length - 1];
+		chrome.tabs.get(lastTabId, function(tab) {
+			if (tab) {
+				chrome.tabs.update(lastTabId, { active: true });
 
-
-		chrome.tabs.get(lastTabIdArray[lastTabIdArray.length -1], function (tab){
-			if(!tab){
-				// alert("La dernière tab n'a pas pu être retrouvé")
-				// alert("Switching to tab : ");
-
-				// lastTabIdArray.pop();
-				// alert('popping succeeded')
-
-				// alert("Switching to tab : "+ lastTabIdArray[lastTabIdArray.length -1]);
 			}
-		chrome.tabs.update(lastTabIdArray[lastTabIdArray.length-1] , {active: true});
+			// else {
+			// alert("La dernière tab n'a pas pu être retrouvé")
+			// alert("Switching to tab : ");
+			// lastTabIdArray.pop();
+			// alert('popping succeeded')
+			// alert("Switching to tab : "+ lastTabId);
+			// }
 		})
+	}
 
 
 /*
